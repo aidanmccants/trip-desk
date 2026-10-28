@@ -9,12 +9,12 @@ binding = "ASSETS"
 not_found_handling = "single-page-application"
 run_worker_first = ["/api/*", "/auth/*", "/oauth/*"]
 
-[vars]
-# Client id from `npm run register`. Leave empty in production to use the
-# client-metadata-document id (https://<host>/oauth/client-metadata.json) instead.
-OAUTH_CLIENT_ID = ""
-# Leave empty to derive https://<request host>/auth/callback.
-OAUTH_REDIRECT_URI = ""
+# Optional variables (set in .dev.vars locally, or as Worker variables in the dashboard):
+#   OAUTH_CLIENT_ID     client id from `npm run register`. Leave unset in production to use the
+#                       client-metadata-document id (https://<host>/oauth/client-metadata.json).
+#   OAUTH_REDIRECT_URI  defaults to https://<request host>/auth/callback.
+#   OAUTH_CLIENT_SECRET only if Tripsy issued one (`npx wrangler secret put OAUTH_CLIENT_SECRET`).
+# Don't add them under [vars] here: an empty [vars] value overrides .dev.vars.
 
 # Create with `npx wrangler kv namespace create SESSIONS` and paste the id here.
 [[kv_namespaces]]

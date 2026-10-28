@@ -1,5 +1,5 @@
 // Form helpers shared by every sheet (React Hook Form + Zod).
-import { forwardRef, useMemo, type InputHTMLAttributes } from 'react';
+import { forwardRef, useId, useMemo, type InputHTMLAttributes } from 'react';
 import type { FieldValues, Path, UseFormSetError } from 'react-hook-form';
 import { ApiError } from '../lib/api';
 import { allTimeZones } from '../lib/time';
@@ -34,10 +34,11 @@ const CURRENCIES = ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'CHF', 'MXN', 'BRL
 
 /** 3-letter currency code input with suggestions. */
 export const CurrencyInput = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(function CurrencyInput(props, ref) {
+  const listId = useId();
   return (
     <>
-      <Input ref={ref} list="currency-list" maxLength={3} placeholder="USD" autoComplete="off" className="uppercase" {...props} />
-      <datalist id="currency-list">{CURRENCIES.map((c) => <option key={c} value={c} />)}</datalist>
+      <Input ref={ref} list={listId} maxLength={3} placeholder="USD" autoComplete="off" className="uppercase" {...props} />
+      <datalist id={listId}>{CURRENCIES.map((c) => <option key={c} value={c} />)}</datalist>
     </>
   );
 });
