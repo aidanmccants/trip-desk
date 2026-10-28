@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* iOS grouped-list palette. Values are "r g b" so Tailwind can apply alpha. */
+:root {
+  --bg: 242 242 247;
+  --card: 255 255 255;
+  --card-2: 242 242 247;
+  --fill: 120 120 128;
+  --label: 0 0 0;
+  --label-2: 60 60 67;
+  --label-3: 142 142 147;
+  --separator: 198 198 200;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: 0 0 0;
+    --card: 28 28 30;
+    --card-2: 44 44 46;
+    --fill: 120 120 128;
+    --label: 255 255 255;
+    --label-2: 235 235 245;
+    --label-3: 142 142 147;
+    --separator: 56 56 58;
+    color-scheme: dark;
+  }
+}
+
+@layer base {
+  html, body, #root { height: 100%; }
+  body {
+    @apply bg-bg text-label font-sans antialiased text-body;
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible { outline: 2px solid theme('colors.accent.DEFAULT'); outline-offset: 2px; }
+}
+
+@layer components {
+  /* Grouped rounded card, as Tripsy's list sections. */
+  .card { @apply bg-card rounded-card shadow-card; }
+  /* A row inside a card; rows after the first get a hairline separator. */
+  .row { @apply flex items-center gap-3 px-4 py-3 min-h-[52px]; }
+  .row + .row { @apply border-t border-separator/60; }
+  .input {
+    @apply w-full rounded-xl bg-card-2 px-3 py-2.5 text-callout text-label placeholder:text-label-3
+      border border-transparent focus:border-accent focus:outline-none;
+  }
+  .label { @apply block text-footnote font-medium uppercase tracking-wide text-label-3 mb-1.5 px-1; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-pill px-3 py-1.5 text-subhead font-medium; }
+}
+
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { scrollbar-width: none; }

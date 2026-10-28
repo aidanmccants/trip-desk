@@ -1,0 +1,4 @@
+# Copy to .dev.vars for `wrangler dev`. Never commit .dev.vars.
+OAUTH_CLIENT_ID=paste-client-id-from-npm-run-register
+OAUTH_CLIENT_SECRET=
+OAUTH_REDIRECT_URI=http://localhost:8787/auth/callback
