@@ -19,7 +19,7 @@ run_worker_first = ["/api/*", "/auth/*", "/oauth/*"]
 # Create with `npx wrangler kv namespace create SESSIONS` and paste the id here.
 [[kv_namespaces]]
 binding = "SESSIONS"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "f0374cbc327842d2a2bdd51a1eb8fc9a"
 
 [[ratelimits]]
 name = "RATE_LIMITER"
