@@ -2,6 +2,8 @@
 
 Trip Desk is a browser editor for [Tripsy](https://tripsy.app) trips, built for desktop screens. You sign in with your Tripsy account and view and edit your trips, itineraries, expenses, documents and settings. It is not affiliated with Tripsy.
 
+A live version is available at [tripdesk.mccants.link](https://tripdesk.mccants.link).
+
 ## How it works
 
 Trip Desk is one Cloudflare Worker that does three things:
@@ -102,8 +104,8 @@ Trip Desk deploys with Cloudflare Workers Builds, from a GitHub repository.
 
 4. Set the production OAuth client id. Choose one:
 
-   - Register with your production callback (`npm run register -- https://<your-domain>/auth/callback`) and set `OAUTH_CLIENT_ID` in `wrangler.toml` under `[vars]` to the printed id.
-   - Or leave `OAUTH_CLIENT_ID` empty. The Worker then uses `https://<your-domain>/oauth/client-metadata.json` as the client id, and Tripsy fetches that document. This needs the Worker to be served over https, and the redirect URI is derived from the request host (`<origin>/auth/callback`).
+   - Register with your production callback (`npm run register -- https://<your-domain>/auth/callback`) and set `OAUTH_CLIENT_ID` to the printed id as a Worker variable in the dashboard (Settings → Variables and Secrets). Don't add it under `[vars]` in `wrangler.toml`: an empty `[vars]` value there overrides `.dev.vars` in local dev.
+   - Or leave `OAUTH_CLIENT_ID` unset. The Worker then uses `https://<your-domain>/oauth/client-metadata.json` as the client id, and Tripsy fetches that document. This needs the Worker to be served over https, and the redirect URI is derived from the request host (`<origin>/auth/callback`).
 
 5. Only if Tripsy issued a client secret, store it as a secret:
 
@@ -137,4 +139,4 @@ The rate-limit binding in `wrangler.toml` uses `namespace_id = "1001"`. Pick ano
 - The `cover_gradient` palette is the app's own. Tripsy stores only the index (`client/src/lib/gradients.ts`).
 - Photo and document uploads PUT straight from the browser to a presigned S3 URL. The bucket's CORS rules for the app origin are not verified yet.
 - Check Tripsy's API terms before opening sign-in to anyone other than the account owner.
-- The domain is not decided. Once the production origin is known, register its callback (`npm run register -- https://<domain>/auth/callback`) unless the client-metadata document is used, because the redirect URI depends on the origin.
+- Production runs at `https://tripdesk.mccants.link`, so its callback is `https://tripdesk.mccants.link/auth/callback`. With `OAUTH_CLIENT_ID` unset, Tripsy reads the client-metadata document at `https://tripdesk.mccants.link/oauth/client-metadata.json`. If Tripsy rejects that, run `npm run register -- https://tripdesk.mccants.link/auth/callback` and set the printed id as `OAUTH_CLIENT_ID`.
